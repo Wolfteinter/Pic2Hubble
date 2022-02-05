@@ -1,0 +1,2 @@
+python-dotenv
+flask==2.0.2
