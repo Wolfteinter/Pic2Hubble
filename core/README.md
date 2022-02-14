@@ -10,3 +10,10 @@
 
 #### Install dependencies
 `pip install -r requirements.txt`
+
+---
+
+### Start to develop
+
+#### Activate virtual env
+`source venv/bin/activate`
