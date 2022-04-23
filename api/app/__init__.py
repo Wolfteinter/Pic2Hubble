@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from flask import Flask
 from flask_restful import Api
 
@@ -8,16 +9,15 @@ def create_app(settings_module):
     app = Flask(__name__)
     app.config.from_object(settings_module)
 
-    # Captura todos los errores 404
+    # Capture 404 errors
     Api(app, catch_all_404s=True)
 
-    # Deshabilita el modo estricto de acabado de una URL con /
+    # Disable strict mode of sufix for URLs with "/"
     app.url_map.strict_slashes = False
 
-    # Registra los blueprints
     app.register_blueprint(hubble_bp)
 
-    # Registra manejadores de errores personalizados
+    # Custom error handlers
     register_error_handlers(app)
 
     return app
@@ -26,16 +26,16 @@ def create_app(settings_module):
 def register_error_handlers(app):
     @app.errorhandler(Exception)
     def handle_exception_error(e):
-        return {'msg': 'Internal server error'}, 500
+        return {"message": "Internal server error"}, HTTPStatus.INTERNAL_SERVER_ERROR
 
     @app.errorhandler(405)
     def handle_405_error(e):
-        return {'msg': 'Method not allowed'}, 405
+        return {"message": "Method not allowed"}, HTTPStatus.METHOD_NOT_ALLOWED
 
     @app.errorhandler(403)
     def handle_403_error(e):
-        return {'msg': 'Forbidden error'}, 403
+        return {"message": "Forbidden error"}, HTTPStatus.FORBIDDEN
 
     @app.errorhandler(404)
     def handle_404_error(e):
-        return {'msg': 'Not Found error'}, 404
+        return {"message": "Not Found error"}, HTTPStatus.NOT_FOUND

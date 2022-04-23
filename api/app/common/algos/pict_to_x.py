@@ -2,9 +2,9 @@ import random
 
 from PIL import Image
 
+from api.app.common.constants import DIM_WINDOW
 from api.app.common.image_utils import get_average_per_channel
 from api.app.common.utils import compute_euclidian_distance
-from api.app.common.constants import DIM_WINDOW
 
 
 class AlgoPict2X:

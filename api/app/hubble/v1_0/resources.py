@@ -10,11 +10,10 @@ from api.app.common.validator.uploaded_file import validate_input_image
 from api.app.ext import dataset_hubble_v1_0, metadata_hubble_v1_0 
 
 
-algo = AlgoPict2X(dataset_hubble_v1_0, metadata_hubble_v1_0)
+algo = AlgoPict2X(dataset_hubble_v1_0, metadata_hubble_v1_0, k=2)
 
 
 class Generator(Resource):
-
     @validate_input_image
     def post(self):
         file = request.files["image"]
@@ -31,8 +30,10 @@ class Generator(Resource):
         )
 
         current_app.logger.info("Generating composed image")
-        
+
         img_res = algo.build(img)
+
+        current_app.logger.info("Converting image to base64 string")
         img_res_base64 = image_to_base64(img_res)
 
         response = {
