@@ -9,7 +9,7 @@ export function Header() {
                     <img src ={hubble}
                     width="40"
                     height="40"/>
-                    <Navbar.Brand href="#home">Pic2Hubble</Navbar.Brand>
+                    <Navbar.Brand href="#home">Pic 2 Hubble</Navbar.Brand>
                 </Navbar>
             </Container>
         </Navbar>

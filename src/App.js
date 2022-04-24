@@ -24,7 +24,7 @@ function App() {
     const getResponse = async () => {
         const formData = new FormData();
         formData.append('image', newUserInfo.profileImages);
-        const api_call = await fetch('http://127.0.0.1:5000/v1.0/generator', {
+        const api_call = await fetch('http://pic2hubble.herokuapp.com/v1.0/generator', {
             method: 'POST',
             body: formData
         });
