@@ -1,13 +1,7 @@
-body {
-    background-image: url("./images/bg.jpg");
-    background-size: 100%;
-  }
-  @media screen and (min-width: 100px) and (max-width: 1500px) {
-    body{
-        background-image: url("./images/bg2.jpg");
-        background-size: 100%;
-    }
-  }
+
+body{
+    background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
+}
   
 .iform{
     display: flex;
@@ -53,5 +47,9 @@ body {
     );
     box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
   }
+
+
+
+  
 
 

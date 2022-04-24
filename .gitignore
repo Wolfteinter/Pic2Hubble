@@ -23,11 +23,31 @@ yarn-debug.log*
 yarn-error.log*
 
 # backend
-venv
-
-# Byte-compiled / optimized / DLL files
+/.venv
+/__pycache__
 __pycache__/
+
+api/__pycache__/
 
 # Distribution / packaging
 .Python
 wheels/
+
+# more for Python
+.DS_Store
+.env
+.flaskenv
+*.pyc
+*.pyo
+env/
+env*
+dist/
+*.egg
+*.egg-info/
+_mailinglist
+.tox/
+.cache/
+.pytest_cache/
+.idea/
+docs/_build/
+.vscode
