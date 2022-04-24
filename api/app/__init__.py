@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS
 
 from api.app.hubble.v1_0.blueprints import hubble_bp
 
@@ -16,6 +17,7 @@ def create_app(settings_module):
     app.url_map.strict_slashes = False
 
     app.register_blueprint(hubble_bp)
+    CORS(app)
 
     # Custom error handlers
     register_error_handlers(app)
