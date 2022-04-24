@@ -49,17 +49,19 @@ const FileUpload = ({
     };
 
     const callUpdateFilesCb = (files) => {
-        const filesAsArray = convertNestedObjectToArray(files);
-        updateFilesCb(filesAsArray);
+        //const filesAsArray = convertNestedObjectToArray(files);
+        updateFilesCb(files);
     };
 
     const handleNewFileUpload = (e) => {
         if (Object.keys(files).length == 0) {
-            const { files: newFiles } = e.target;
-            if (newFiles.length) {
-                let updatedFiles = addNewFiles(newFiles);
+            const { target: { files } } = e;
+            let images = e.target.files;
+            console.log(images);
+            if (files.length) {
+                let updatedFiles = addNewFiles(images);
                 setFiles(updatedFiles);
-                callUpdateFilesCb(updatedFiles);
+                updateFilesCb(e.target.files[0]);
             }
         }
     };
@@ -73,7 +75,10 @@ const FileUpload = ({
     return (
         <>
             <FileUploadContainer>
-                <DragDropText>Drag and drop your image</DragDropText>
+                <h2>Drag and drop your image</h2>
+
+                <h5>Non-profit project. Submitted and generated images are not stored.</h5>
+                    
                 <UploadFileBtn type="button" onClick={handleUploadBtnClick}>
                     <i className="fas fa-file-upload" />
                     <span> Upload {otherProps.multiple ? "files" : "a file"}</span>
