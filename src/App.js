@@ -30,7 +30,7 @@ function App() {
         });
 
         const data = await api_call.json();
-        console.log(data);
+        // console.log(data);
         setImage(data.image);
         setDone(false);
         setDoneImage(true);
@@ -78,8 +78,6 @@ function App() {
                         )}
                     </>
                 )}
-
-
             </form>
         </div>
     );

@@ -5,6 +5,7 @@ from flask_restful import Resource
 from PIL import Image
 
 from api.app.common.algos.pict_to_x import AlgoPict2X
+from api.app.common.image_utils import redim_image
 from api.app.common.utils import image_to_base64
 from api.app.common.validator.uploaded_file import validate_input_image
 from api.app.ext import dataset_hubble_v1_0, metadata_hubble_v1_0 
@@ -27,6 +28,11 @@ class Generator(Resource):
 
         current_app.logger.info(
             f"New image {img.format}, width: {img.width}, height: {img.height}"
+        )
+
+        img = redim_image(img, max_dim=810)
+        current_app.logger.info(
+            f"New dims - width: {img.width}, height: {img.height}"
         )
 
         current_app.logger.info("Generating composed image")

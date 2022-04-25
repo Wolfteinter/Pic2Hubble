@@ -10,7 +10,7 @@ export const FileUploadContainer = styled.section`
   flex-direction: column;
   align-items: center;
   background-color: white;
-  width: 60%
+  width: 78%
 `;
 
 export const FormField = styled.input`

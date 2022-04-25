@@ -39,3 +39,21 @@ def is_square(image: Image) -> bool:
     width, height = image.size
 
     return height == width
+
+
+def redim_image(img, max_dim=1500):
+    width, height = img.width, img.height
+
+    if not width > max_dim and not height > max_dim:
+        return img
+
+    if height > width:
+        hpercent = (max_dim / float(img.size[1]))
+        wsize = int((float(img.size[0]) * float(hpercent)))
+        res = img.resize((wsize, max_dim), Image.ANTIALIAS)
+    else:
+        wpercent = (max_dim/float(img.size[0]))
+        hsize = int((float(img.size[1]) * float(wpercent)))
+        res = img.resize((max_dim, hsize), Image.ANTIALIAS)
+
+    return res
