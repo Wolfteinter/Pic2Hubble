@@ -17,13 +17,27 @@ class AlgoPict2X:
         distances = list() # list of tuples(distance, index)
         assert len(avg_per_channel) == 3
 
-        for index, row in self.metadata.iterrows():
-            distance = compute_euclidian_distance(
-                a=list(avg_per_channel), 
-                b=[row["r_avg"], row["g_avg"], row["b_avg"]]
-            )
+        
+        distances_serie = self.metadata.apply(
+            lambda row: (
+                compute_euclidian_distance(
+                    a=list(avg_per_channel),
+                    b=[row["r_avg"], row["g_avg"], row["b_avg"]]
+                ), 
+                row.name
+            ),
+            axis=1
+        )
 
-            distances.append((distance, index))
+        distances = list(distances_serie)
+
+        # for index, row in self.metadata.iterrows():
+        #     distance = compute_euclidian_distance(
+        #         a=list(avg_per_channel), 
+        #         b=[row["r_avg"], row["g_avg"], row["b_avg"]]
+        #     )
+
+        #     distances.append((distance, index))
 
         distances.sort()
 

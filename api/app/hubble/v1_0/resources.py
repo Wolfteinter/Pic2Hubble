@@ -1,3 +1,4 @@
+import os
 from http import HTTPStatus
 
 from flask import current_app, request
@@ -12,6 +13,7 @@ from api.app.ext import dataset_hubble_v1_0, metadata_hubble_v1_0
 
 
 algo = AlgoPict2X(dataset_hubble_v1_0, metadata_hubble_v1_0, k=2)
+max_dim = int(os.environ.get("MAX_DIM", 810))
 
 
 class Generator(Resource):
@@ -30,7 +32,7 @@ class Generator(Resource):
             f"New image {img.format}, width: {img.width}, height: {img.height}"
         )
 
-        img = redim_image(img, max_dim=810)
+        img = redim_image(img, max_dim=max_dim)
         current_app.logger.info(
             f"New dims - width: {img.width}, height: {img.height}"
         )
