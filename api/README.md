@@ -24,7 +24,7 @@
 
 **Add the next variables on .venv/bin/activate**
 ```
-export FLASK_APP="api.entrypoint:app"
+export FLASK_APP="entrypoint:app"
 export FLASK_ENV="development"
 export APP_SETTINGS_MODULE="api.config.default"
 ```

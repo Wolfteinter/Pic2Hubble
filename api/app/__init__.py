@@ -1,3 +1,5 @@
+import os
+
 from http import HTTPStatus
 from flask import Flask
 from flask_restful import Api
@@ -7,7 +9,12 @@ from api.app.hubble.v1_0.blueprints import hubble_bp
 
 
 def create_app(settings_module):
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        static_folder="build", 
+        static_url_path="/",
+        root_path=os.path.join(os.getcwd(), "")
+    )
     app.config.from_object(settings_module)
 
     # Capture 404 errors

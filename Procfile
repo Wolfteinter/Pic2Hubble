@@ -1,1 +1,1 @@
-web: gunicorn api.entrypoint:app
+web: gunicorn entrypoint:app
