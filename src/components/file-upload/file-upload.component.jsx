@@ -77,7 +77,7 @@ const FileUpload = ({
             <FileUploadContainer>
                 <h2>Drag and drop your image</h2>
 
-                <h5>Non-profit project. Submitted and generated images are not stored.</h5>
+                <h5>Non-profit project. Submitted and generated images are not being stored.</h5>
                     
                 <UploadFileBtn type="button" onClick={handleUploadBtnClick}>
                     <i className="fas fa-file-upload" />
