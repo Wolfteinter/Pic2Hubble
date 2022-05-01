@@ -57,7 +57,7 @@ const FileUpload = ({
         if (Object.keys(files).length == 0) {
             const { target: { files } } = e;
             let images = e.target.files;
-            console.log(images);
+            // console.log(images);
             if (files.length) {
                 let updatedFiles = addNewFiles(images);
                 setFiles(updatedFiles);
