@@ -22,7 +22,7 @@ class Generator(Resource):
         file = request.files["image"]
         img = Image.open(file.stream)
 
-        if img.mode != "RGB":
+        if img.mode != "RGB" and img.mode != "RGBA":
             return (
                 {"message": "Space color not supported, try only RGB"},
                 HTTPStatus.BAD_REQUEST

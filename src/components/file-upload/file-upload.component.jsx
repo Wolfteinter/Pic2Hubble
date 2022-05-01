@@ -13,8 +13,8 @@ import {
     InputLabel
 } from "./file-upload.styles";
 
-const KILO_BYTES_PER_BYTE = 1000;
-const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 500000;
+const KILO_BYTES_PER_BYTE = 2000;
+const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 900000;
 
 const convertNestedObjectToArray = (nestedObj) =>
     Object.keys(nestedObj).map((key) => nestedObj[key]);
