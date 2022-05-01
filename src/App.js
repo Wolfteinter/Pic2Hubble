@@ -13,6 +13,7 @@ function App() {
     const [done, setDone] = useState(false);
     const [doneImage, setDoneImage] = useState(false);
     const [image, setImage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const updateUploadedFiles = (files) =>
         setNewUserInfo({ ...newUserInfo, profileImages: files });
@@ -31,14 +32,19 @@ function App() {
             body: formData
         });
 
-        const data = await api_call.json();
-        // console.log(data);
-        setImage(data.image);
+        const data = await api_call.json()
+
+        if(api_call.status != 200) {
+            setErrorMessage(data.message);
+        }
+        else {
+            setImage(data.image);
+        }
         setDone(false);
         setDoneImage(true);
-
     }
     const convertImage = () => {
+        resetErrorMessage("");
         setDone(true);
         setDoneImage(false);
         getResponse();
@@ -56,22 +62,40 @@ function App() {
         saveAs( "data:image/png;base64,"+image, filename);
     }
 
+    const resetErrorMessage = () => {
+        setErrorMessage("");
+    }
+
+    const resetForm = () => {
+        window.location.reload();
+    }
+
     return (
         <div>
             <Header />
             <form className='iform' onSubmit={handleSubmit} style={{ marginTop: 60 }}>
                 {doneImage ? (
                     <>
-                        <button onClick={downloadImage} className="bn632-hover bn22">Download</button>
-                        <img src={`data:image/jpeg;base64,${image}`} />
+                        {errorMessage ? (
+                            <>
+                                <div style={{paddingTop: '50px'}}>
+                                    <p  className="error alert alert-danger"> {errorMessage} </p>
+                                    <a href="#" className="link-info" onClick={resetForm}>Try again</a>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <button onClick={downloadImage} className="bn632-hover bn22">Download</button>
+                                <img src={`data:image/jpeg;base64,${image}`} />
+                            </>)}
                     </>
-
+    
                 ) : (
                     <>
                         <FileUpload
                             accept=".jpg,.png,.jpeg"
                             label="Image to process"
-                            multiple
+                            // multiple
                             updateFilesCb={updateUploadedFiles}
                         />
                         {done ? (
