@@ -1,7 +1,6 @@
 import os
-
 from http import HTTPStatus
-from sys import prefix
+
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS

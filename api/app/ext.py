@@ -10,5 +10,5 @@ dataset_hubble_v2_0, metadata_hubble_v2_0 = load_dataset(
 )
 
 nodes, graph = build_graph(
-    name_dataset="hubble", version="v2.0"
+    name_dataset="hubble", version="v2.0", metadata_graph=metadata_hubble_v2_0
 )

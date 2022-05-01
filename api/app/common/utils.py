@@ -8,15 +8,12 @@ from typing import List, Union
 import pandas as pd
 from PIL import Image
 
-from api.app.common.constants import BASE_DATASETS_PATH
+from api.app.common.constants import BASE_DATASETS_PATH, GRAPH_SIZE, GRAPH_RANGE_DIM
 from api.app.common.node import Node
 
-csv_nodes = {}
-nodes = {}
-size = 15
-range_dim = 17
+nodes = dict()
+csv_nodes = dict()
 
-metadata_graph = pd.read_csv(os.path.join(BASE_DATASETS_PATH.format('hubble', 'v2.0'), "metadata.csv"))
 
 def compute_euclidian_distance(a: List[Union[int, float]], b: List[Union[int, float]]):
     acc = 0.0
@@ -63,18 +60,24 @@ def uncompress_thumbnails(src: str, dest: str):
         zip_ref.extractall(dest)
 
 
-def compute_nearest_images(metadata: pd.DataFrame, avg_per_channel: tuple, k: int = 3):
+def compute_nearest_images(
+    metadata: pd.DataFrame, avg_per_channel: tuple, k: int = 3
+) -> list:
     distances = list() # list of tuples(distance, index)
-    assert len(avg_per_channel) == 3
 
-    for row in metadata.iterrows():
-        distance = compute_euclidian_distance(
-            a=list(avg_per_channel), 
-            b=[row[1]["r_avg"], row[1]["g_avg"], row[1]["b_avg"]]
-        )
+    distances_serie = metadata.apply(
+        lambda row: (
+            compute_euclidian_distance(
+                a=list(avg_per_channel),
+                b=[row["r_avg"], row["g_avg"], row["b_avg"]]
+            ), 
+            row.name
+        ),
+        axis=1
+    )
 
-        distances.append((distance, row[0]))
-    
+    distances = list(distances_serie)
+
     distances.sort()
 
     nearest_images = list()
@@ -84,10 +87,16 @@ def compute_nearest_images(metadata: pd.DataFrame, avg_per_channel: tuple, k: in
 
     return nearest_images
 
-def generate_graph_CSV(r_pk, g_pk, b_pk):
-    pk = int(r_pk * pow(size, 2) +  g_pk*pow(size, 1) +  b_pk*pow(size, 0))
+
+def generate_graph_CSV(r_pk, g_pk, b_pk, metadata_graph: pd.DataFrame):
+    pk = int(
+        r_pk * pow(GRAPH_SIZE, 2) 
+        + g_pk*pow(GRAPH_SIZE, 1) 
+        + b_pk*pow(GRAPH_SIZE, 0)
+    )
+
     if nodes.get(pk, -1) == -1:
-        node = Node(r_pk, g_pk, b_pk, range_dim, size)
+        node = Node(r_pk, g_pk, b_pk, GRAPH_RANGE_DIM, GRAPH_SIZE)
         if pk == 3374:
             rgb_mean = (
                 (node.r_range[0] + node.r_range[0])/2 , 
@@ -98,20 +107,22 @@ def generate_graph_CSV(r_pk, g_pk, b_pk):
         else :
             node.images = csv_nodes[pk].images
 
-        if r_pk == size - 1 and g_pk == size - 1 and b_pk == size - 1:
+        if r_pk == GRAPH_SIZE-1 and g_pk == GRAPH_SIZE-1 and b_pk == GRAPH_SIZE-1:
             return node
-        if r_pk < size - 1:
-            node.r = generate_graph_CSV(r_pk + 1, g_pk, b_pk)
-        if g_pk < size - 1:
-            node.g = generate_graph_CSV(r_pk, g_pk + 1, b_pk)
-        if b_pk < size - 1:
-            node.b = generate_graph_CSV(r_pk, g_pk, b_pk + 1)
+        if r_pk < GRAPH_SIZE - 1:
+            node.r = generate_graph_CSV(r_pk + 1, g_pk, b_pk, metadata_graph)
+        if g_pk < GRAPH_SIZE - 1:
+            node.g = generate_graph_CSV(r_pk, g_pk + 1, b_pk, metadata_graph)
+        if b_pk < GRAPH_SIZE - 1:
+            node.b = generate_graph_CSV(r_pk, g_pk, b_pk + 1, metadata_graph)
 
         nodes[pk] = node
         return node
+
     return nodes.get(pk)
 
-def build_graph(name_dataset: str, version: str) -> tuple:
+
+def build_graph(name_dataset: str, version: str, metadata_graph: pd.DataFrame) -> tuple:
     base_path = os.path.join(BASE_DATASETS_PATH.format(name_dataset, version), "graph.csv")
     graph_metadata = pd.read_csv(base_path)
     for row in graph_metadata.iterrows():
@@ -123,5 +134,7 @@ def build_graph(name_dataset: str, version: str) -> tuple:
         images = str(row[1]['images'])
         node.images = images.split(";") if images != 'nan' else []
         csv_nodes[node.pk] = node
-    graph = generate_graph_CSV(0,0,0)
+
+    graph = generate_graph_CSV(0, 0, 0, metadata_graph)
+
     return (nodes, graph)

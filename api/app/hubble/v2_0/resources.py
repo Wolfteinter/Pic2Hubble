@@ -8,11 +8,11 @@ from PIL import Image
 from api.app.common.algos.graph_pict_to_x import AlgoGraphPict2X
 from api.app.common.utils import image_to_base64
 from api.app.common.validator.uploaded_file import validate_input_image
-from api.app.ext import dataset_hubble_v2_0, metadata_hubble_v2_0
-from api.app.ext import nodes, graph 
+from api.app.ext import dataset_hubble_v2_0, graph, metadata_hubble_v2_0, nodes
 
 
 algo = AlgoGraphPict2X(dataset_hubble_v2_0, metadata_hubble_v2_0, nodes, graph)
+
 
 class Generator(Resource):
     @validate_input_image
@@ -20,7 +20,9 @@ class Generator(Resource):
         file = request.files["image"]
         img = Image.open(file.stream)
 
-        if img.mode != "RGB":
+        print(img.mode)
+
+        if img.mode != "RGB" and img.mode != "RGBA":
             return (
                 {"message": "Space color not supported, try only RGB"},
                 HTTPStatus.BAD_REQUEST
