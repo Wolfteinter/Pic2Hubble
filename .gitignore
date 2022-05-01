@@ -51,3 +51,7 @@ _mailinglist
 .idea/
 docs/_build/
 .vscode
+
+
+# for compressed datasets
+api/app/common/datasets/hubble/v2.0/thumbnails/

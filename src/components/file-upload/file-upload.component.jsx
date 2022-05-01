@@ -13,8 +13,8 @@ import {
     InputLabel
 } from "./file-upload.styles";
 
-const KILO_BYTES_PER_BYTE = 1000;
-const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 500000;
+const KILO_BYTES_PER_BYTE = 2000;
+const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 900000;
 
 const convertNestedObjectToArray = (nestedObj) =>
     Object.keys(nestedObj).map((key) => nestedObj[key]);
@@ -57,7 +57,7 @@ const FileUpload = ({
         if (Object.keys(files).length == 0) {
             const { target: { files } } = e;
             let images = e.target.files;
-            console.log(images);
+            // console.log(images);
             if (files.length) {
                 let updatedFiles = addNewFiles(images);
                 setFiles(updatedFiles);
@@ -75,9 +75,9 @@ const FileUpload = ({
     return (
         <>
             <FileUploadContainer>
-                <h2>Drag and drop your image</h2>
+                <h3>Drag and drop your pic</h3>
 
-                <h5>Non-profit project. Submitted and generated images are not being stored.</h5>
+                <h6>Non-profit project. Submitted and generated images are not being stored.</h6>
                     
                 <UploadFileBtn type="button" onClick={handleUploadBtnClick}>
                     <i className="fas fa-file-upload" />
