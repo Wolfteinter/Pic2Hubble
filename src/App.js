@@ -19,12 +19,14 @@ function App() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(newUserInfo);
+        // console.log(newUserInfo);
     };
     const getResponse = async () => {
         const formData = new FormData();
         formData.append('image', newUserInfo.profileImages);
-        const api_call = await fetch('https://pic2hubble.herokuapp.com/v1.0/generator', {
+        const api_url = "https://pic2hubble.herokuapp.com/v1.0/generator"
+        // const api_url = "http://localhost:5000/v1.0/generator"
+        const api_call = await fetch(api_url, {
             method: 'POST',
             body: formData
         });
@@ -42,8 +44,16 @@ function App() {
         getResponse();
     }
 
+    const getFilename = ()  => {
+        let d = new Date();
+        let dformat = `${d.getHours()}_${d.getMinutes()}`;
+
+        return "pic2hubble_" + dformat + ".png";
+    }
+
     const downloadImage = () => {
-        saveAs( "data:image/png;base64,"+image, 'image.png') // Put your image url here.
+        let filename = getFilename();
+        saveAs( "data:image/png;base64,"+image, filename);
     }
 
     return (
