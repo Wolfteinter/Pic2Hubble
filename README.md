@@ -1,73 +1,63 @@
-# Getting Started with Create React App
+# Pic2Hubble
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is intended to produce images composed of 16x16 pixel clusters of space images mostly from the Hubble telescope, the algorithm is written in Python using and Flask API returning the base 64 image, and the frontend is developed in React JS.
+You can try it at https://pic2hubble.herokuapp.com/
 
-## Available Scripts
+## Some examples: 
+![FRtiGynXwAAFtka](https://user-images.githubusercontent.com/36217766/166343384-8e91849f-bb6f-42ab-af99-eaf973ec9562.jpg)
+![278845614_4918775891565098_3132902473234924174_n](https://user-images.githubusercontent.com/36217766/166343038-d1171d18-f226-422b-9ae5-5a879899ae3e.jpg)
 
-In the project directory, you can run:
+## Approaches
+### V1
+1) We save the average color of all the images in the dataset and save them in a CSV.
+2) Export the data from the CSV into a Pandas Dataframe
+3) Iterate all 16x16 slices of the image calculate the average and find the element k nearset in Dataframe
+    1) Select a random image from the k images
+    2) Replace the slice for the image
+### V2
+1) We save the average color of all the images in the dataset and save them in a CSV.
+2) Export the data from the CSV into a Pandas Dataframe
+3) Graph is generated, from color interval (0, 0, 0) to (step, step, step), where the step can be [3, 5, 15, 17, 51, 85], and then for each color channel, the interval is increased with by step value and the same process is continued for each color interval until the color reaches (255, 255, 255) and for each color interval a search is performed to find the 3 closest images based on the mean color over the Dataframe.
+4) Iterate all the 16x16 slices of the image calculate the avarage search on the graph using DFS
+    1) Select a random image from the images available
+    2) Replace the slice for the image
+## Setup Frontend
+```
+npm install
+npm start
+```
+## Setup Backend
 
-### `npm start`
+**Requeriments**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [virtualenv](https://virtualenv.pypa.io/en/latest/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Create virtual env**
 
-### `npm test`
+`virtualenv .venv --python=python3.8`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Activate virtual env**
 
-### `npm run build`
+`source .venv/bin/activate`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Install dependencies**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`pip install -r requirements.txt`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Add the next variables on .venv/bin/activate**
+```
+export FLASK_APP="entrypoint:app"
+export FLASK_ENV="development"
+export APP_SETTINGS_MODULE="api.config.default"
+```
+```
+flask run 
+```
+**Activate virtual env**
 
-### `npm run eject`
+`source .venv/bin/activate`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Deactivate virtual env**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`deactivate`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-# Flask - backend
-Please check [here](api/)
