@@ -71,6 +71,12 @@ flask run
 
 `deactivate`
 
+**Additional notes**
+
+If you are using a Linux distro and get the error: `[Errno 24] Too many open files` you can use the next command to increase, temporally, the limit of open files.
+
+`ulimit -n 4096`
+
 -------
 ## Contribute
 Feel free to open/help with issues. Fork the repo, create a branch from `dev` branch, work your changes and open a MR. 

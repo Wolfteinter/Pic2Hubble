@@ -5,7 +5,7 @@ from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
 
-from api.app.hubble.v1_0.blueprints import hubble_bp
+# from api.app.hubble.v1_0.blueprints import hubble_bp # deprecated
 from api.app.hubble.v2_0.blueprints_v2 import hubble_bp_v2
 
 
@@ -24,7 +24,6 @@ def create_app(settings_module):
     # Disable strict mode of sufix for URLs with "/"
     app.url_map.strict_slashes = False
 
-    app.register_blueprint(hubble_bp, url_prefix='/v1')
     app.register_blueprint(hubble_bp_v2, url_prefix='/v2')
     CORS(app)
 
