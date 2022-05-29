@@ -26,7 +26,7 @@ function App() {
         const formData = new FormData();
         formData.append('image', newUserInfo.profileImages);
         const api_url = "https://pic2hubble.herokuapp.com/v2/generator"
-        //const api_url = "http://localhost:5000/v2/generator"
+        // const api_url = "http://localhost:5000/v2/generator"
         const api_call = await fetch(api_url, {
             method: 'POST',
             body: formData

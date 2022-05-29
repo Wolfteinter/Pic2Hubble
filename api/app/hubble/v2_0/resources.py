@@ -6,12 +6,14 @@ from flask_restful import Resource
 from PIL import Image
 
 from api.app.common.algos.graph_pict_to_x import AlgoGraphPict2X
+from api.app.common.image_utils import redim_image
 from api.app.common.utils import image_to_base64
 from api.app.common.validator.uploaded_file import validate_input_image
 from api.app.ext import dataset_hubble_v2_0, graph, metadata_hubble_v2_0, nodes
 
 
 algo = AlgoGraphPict2X(dataset_hubble_v2_0, metadata_hubble_v2_0, nodes, graph)
+max_dim = int(os.environ.get("MAX_DIM", 2300))
 
 
 class Generator(Resource):
@@ -19,8 +21,6 @@ class Generator(Resource):
     def post(self):
         file = request.files["image"]
         img = Image.open(file.stream)
-
-        print(img.mode)
 
         if img.mode != "RGB" and img.mode != "RGBA":
             return (
@@ -30,6 +30,11 @@ class Generator(Resource):
 
         current_app.logger.info(
             f"New image {img.format}, width: {img.width}, height: {img.height}"
+        )
+
+        img = redim_image(img, max_dim=max_dim)
+        current_app.logger.info(
+            f"New dims - width: {img.width}, height: {img.height}"
         )
 
         current_app.logger.info("Generating composed image")
