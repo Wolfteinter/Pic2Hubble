@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FileUpload from "./components/file-upload/file-upload.component";
 import { Header } from "./components/Header";
+import { RepoLink } from "./components/RepoLink";
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import ReactLoading from "react-loading";
@@ -113,6 +114,7 @@ function App() {
                     </>
                 )}
             </form>
+            <RepoLink/>
         </div>
     );
 }
