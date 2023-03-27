@@ -79,5 +79,5 @@ If you are using a Linux distro and get the error: `[Errno 24] Too many open fil
 
 -------
 ## Contribute
-Feel free to open/help with issues. Fork the repo, create a branch from `dev` branch, work your changes and open a MR. 
+Feel free to open/help with issues. Fork the repo, create a branch from `dev` branch, work your changes and open a Pull Request. 
 
