@@ -1,6 +1,7 @@
 import streamlit as st
 
 from src.test import test
+from src.handler import greet
 
 
 def run():
@@ -19,7 +20,8 @@ def run():
 
         st.image(uploaded_file, width=300)
 
-        image_bytes = test(uploaded_file)
+        with st.spinner("Generating image"):
+            image_bytes = test(uploaded_file)
 
         filename = f"pic-2-hubble.png"
         st.download_button("Download", image_bytes, file_name=filename)
