@@ -1,6 +1,7 @@
 import os
 import math
 import zipfile
+from datetime import datetime
 from typing import List, Tuple, Union
 
 import pandas as pd
@@ -68,3 +69,12 @@ def compute_nearest_images(
         nearest_images.append(metadata.iloc[index]["file"])
 
     return nearest_images
+
+
+def build_result_filename(filename: str, format: str = "png") -> str:
+    now_str = datetime.now().strftime("%Y%m%d_%H%M")
+
+    name_without_extension = filename.split(".")
+    name_without_extension = "_".join(name_without_extension[:-1])
+
+    return f"pic2hubble_{name_without_extension}_{now_str}.{format}"
