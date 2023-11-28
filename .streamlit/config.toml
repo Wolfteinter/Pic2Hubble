@@ -1,2 +1,6 @@
 [server]
-maxUploadSize = 50
+maxUploadSize=50
+
+[theme]
+base="dark"
+primaryColor="purple"
