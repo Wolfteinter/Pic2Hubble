@@ -1,7 +1,9 @@
 # Pic2Hubble
 
 This project is intended to produce images composed of 16x16 pixel clusters of space images mostly from by Hubble Space Telescope. The algorithm is written in Python. The app web runs with streamlit.
-You can try it at: [PENDING]
+You can try it at: https://pic2appble-hvlheiu8rexwewpebevkvr.streamlit.app/
+
+**Note:** If the web app brings you to a forked repo (it will be keep synced), the original is: https://github.com/Wolfteinter/Pic2Hubble, so give us a star ⭐ there if you did like the project.
 
 -------
 ## Some examples: 
@@ -46,13 +48,9 @@ the element k nearset in DataFrame.
 
 ## Run web app
 
-**Activate virtual env**
+`make run`
 
-`conda activate pic2hubble-streamlit`
-
-**Run web app**
-
-`streamlit run app.py`
+A tab will be open in the browser with the app running.
 
 -------
 

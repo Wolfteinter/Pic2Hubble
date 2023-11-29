@@ -19,3 +19,27 @@ setup: create_env
 		pip install -r requirements-dev.txt; \
 		pip install -r requirements.txt; \
 	)
+
+run:
+	@( \
+		eval "$$(conda shell.bash hook)"; \
+		conda activate $(ENV_NAME) || exit 1; \
+		streamlit run app.py; \
+	)
+
+# You must activate your conda environment, conda activate <ENV_NAME>
+
+lint-preview:
+	@( \
+		echo "Running isort..."; \
+		isort --check-only .; \
+		echo -e "\nRunning black..."; \
+		black --check .; \
+	)
+
+
+lint-apply:
+	@( \
+		isort .; \
+		black .; \
+	)
