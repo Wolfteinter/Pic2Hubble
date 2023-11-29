@@ -14,7 +14,7 @@ class AlgoGraphPict2X:
         self.graph = graph
         self.k = 3
         self.res = ""
-    
+
     def __search(self, node, r, g, b):
         if len(node.images) > 0:
             self.res = random.choice(node.images)
@@ -33,8 +33,8 @@ class AlgoGraphPict2X:
             for x in range(0, m, DIM_WINDOW):
                 left = x
                 upper = y
-                right = min(m-1, x+DIM_WINDOW)
-                lower = min(n-1, y+DIM_WINDOW)
+                right = min(m - 1, x + DIM_WINDOW)
+                lower = min(n - 1, y + DIM_WINDOW)
                 window = img.crop((left, upper, right, lower))
 
                 avg = get_average_per_channel(window)

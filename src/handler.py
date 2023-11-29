@@ -9,7 +9,6 @@ from src.algos.graph_pic_to_x import AlgoGraphPict2X
 from src.graph import build_graph
 from src.utils import load_dataset
 
-
 logger.basicConfig(level=logger.INFO)
 
 
@@ -29,9 +28,7 @@ algo = AlgoGraphPict2X(dataset_hubble_v2_0, metadata_hubble_v2_0, nodes, graph)
 def pic_2_hubble(uploaded_file: UploadedFile):
     img = Image.open(uploaded_file)
 
-    logger.info(
-        f"New image {img.format}, width: {img.width}, height: {img.height}"
-    )
+    logger.info(f"New image {img.format}, width: {img.width}, height: {img.height}")
 
     logger.info("Generating composed image...")
     start_time = time.time()

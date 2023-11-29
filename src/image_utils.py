@@ -1,11 +1,11 @@
-from functools import lru_cache 
+from functools import lru_cache
 from typing import Tuple
 
 from PIL import Image
 
 
 def get_average_per_channel(img: Image) -> Tuple[float]:
-    """Given an image, calculates R-average, G-average, and B-average values for 
+    """Given an image, calculates R-average, G-average, and B-average values for
     each RGB channel. Returns a tuple with the 3 averages."""
     r, g, b = 0, 0, 0
     area = img.width * img.height

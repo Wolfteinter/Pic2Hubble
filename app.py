@@ -17,10 +17,11 @@ def run():
         "Upload an image and we'll convert it into a mosaic composed image"
         " using astronomical photos."
     )
+    st.markdown("[GitHub repo](https://github.com/Wolfteinter/Pic2Hubble)")
 
     st.warning(
         body="Non-profit project. Submitted and generated images are not being stored.",
-        icon="⚠️"
+        icon="⚠️",
     )
 
     uploaded_file = st.file_uploader(
@@ -30,7 +31,7 @@ def run():
     if uploaded_file is not None:
         image_filename = uploaded_file.name
 
-        st.image(uploaded_file, width=300)
+        st.image(uploaded_file, width=400)
 
         with st.spinner("Generating image"):
             image_bytes = pic_2_hubble(uploaded_file)
@@ -38,6 +39,9 @@ def run():
         filename = build_result_filename(image_filename)
 
         st.success("Image generated successfully!")
+
+        st.image(image_bytes, width=400)
+
         st.download_button("Download", image_bytes, file_name=filename, on_click=reset)
 
         st.info(body="App created by Onder F. Campos and David Betancourt")

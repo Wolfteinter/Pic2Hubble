@@ -1,5 +1,5 @@
-import os
 import math
+import os
 import zipfile
 from datetime import datetime
 from typing import List, Tuple, Union
@@ -12,7 +12,7 @@ from src.constants import BASE_DATASETS_PATH
 def load_dataset(
     name_dataset: str, version: str, is_compressed=False
 ) -> Tuple[dict, pd.DataFrame]:
-    """Load dataset (images paths and metadata) given its name, version and flag to 
+    """Load dataset (images paths and metadata) given its name, version and flag to
     uncompress when necessary."""
     base_path = os.path.join(BASE_DATASETS_PATH.format(name_dataset, version))
     base_img_path = base_path + "/thumbnails/"
@@ -28,7 +28,7 @@ def load_dataset(
     for file in files:
         img_path = base_img_path + file
         images[file] = img_path
-    
+
     metadata = pd.read_csv(metadata_path)
 
     return (images, metadata)
@@ -38,7 +38,7 @@ def compute_euclidian_distance(a: List[Union[int, float]], b: List[Union[int, fl
     acc = 0.0
 
     for a_i, b_i in zip(a, b):
-        acc += (a_i - b_i)**2
+        acc += (a_i - b_i) ** 2
 
     return math.sqrt(acc)
 
@@ -46,17 +46,16 @@ def compute_euclidian_distance(a: List[Union[int, float]], b: List[Union[int, fl
 def compute_nearest_images(
     metadata: pd.DataFrame, avg_per_channel: tuple, k: int = 3
 ) -> list:
-    distances = list() # list of tuples(distance, index)
+    distances = list()  # list of tuples(distance, index)
 
     distances_serie = metadata.apply(
         lambda row: (
             compute_euclidian_distance(
-                a=list(avg_per_channel),
-                b=[row["r_avg"], row["g_avg"], row["b_avg"]]
+                a=list(avg_per_channel), b=[row["r_avg"], row["g_avg"], row["b_avg"]]
             ),
-            row.name
+            row.name,
         ),
-        axis=1
+        axis=1,
     )
 
     distances = list(distances_serie)
