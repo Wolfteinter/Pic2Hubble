@@ -7,6 +7,7 @@ from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 from src.algos.graph_pic_to_x import AlgoGraphPict2X
 from src.graph import build_graph
+from src.image_utils import resize_image
 from src.utils import load_dataset
 
 logger.basicConfig(level=logger.INFO)
@@ -29,6 +30,9 @@ def pic_2_hubble(uploaded_file: UploadedFile):
     img = Image.open(uploaded_file)
 
     logger.info(f"New image {img.format}, width: {img.width}, height: {img.height}")
+
+    logger.info("Resizing image...")
+    img = resize_image(img, max_size=1500)
 
     logger.info("Generating composed image...")
     start_time = time.time()
